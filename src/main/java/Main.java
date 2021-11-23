@@ -1,13 +1,15 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+
 
 public class Main {
 
     private final static String url = "jdbc:mysql://localhost:3306/student_manager";
     private final static String user = "root";
+    private final static String groupid = "";
+    private final static String id = "";
+    private final static String groupName = "";
 
     public static void main(String[] args){
 
@@ -17,31 +19,28 @@ public class Main {
 //            System.out.println("Unavailable command");
 //
 //        }
-        ArrayList<String> studentList = CSVReader.reader("2");
-        updateBD(studentList);
-    }
-    public static void updateBD(ArrayList<String> studentList){
-        try {
 
+        String path = "C:/someFolder/studentDir/" + "17704.csv";
+        ArrayList<String> studentList = CSVReader.reader(path);
+
+        Statement st = createConn();
+        DataWrite.updateBD(studentList, groupid, id, groupName, st);
+    }
+
+    public static Statement createConn(){
+
+        try {
             Connection connection = DriverManager.getConnection(url, user, "12124576");
             Statement statement = connection.createStatement();
+            return statement;
 
-            for (String student: studentList){
-                String[] line = student.split(",");
-
-
-            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+        return null;
     }
 
-
-
-
-
-    }
+}
 
 
 
